@@ -1,0 +1,8 @@
+﻿  game.c
+C:\Users\Seinrih\source\repos\TicTacToe\TicTacToe\game.c(190,18): warning C4047: “==”:“int”与“int (__cdecl *)(char (*)[3],int,int)”的间接级别不同
+  test.c
+  正在生成代码
+  Previous IPDB not found, fall back to full compilation.
+  All 20 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  已完成代码的生成
+  TicTacToe.vcxproj -> C:\Users\Seinrih\source\repos\TicTacToe\Release\TicTacToe.exe

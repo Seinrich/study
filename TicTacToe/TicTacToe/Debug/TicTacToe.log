@@ -1,0 +1,5 @@
+﻿  game.c
+C:\Users\Seinrih\source\repos\TicTacToe\TicTacToe\game.c(190,18): warning C4047: “==”:“int”与“int (__cdecl *)(char (*)[3],int,int)”的间接级别不同
+  test.c
+  正在生成代码...
+  TicTacToe.vcxproj -> C:\Users\Seinrih\source\repos\TicTacToe\Debug\TicTacToe.exe
