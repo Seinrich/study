@@ -185,7 +185,6 @@
 //		a=a >> 1;
 //	}
 //	printf("%d", count);
-//}
 
 ////0001 0010 
 ////0011
@@ -330,10 +329,20 @@
 //	printf("sum = %d", a);
 //}
 
-#include <windows.h>
 
-int main()
-{
-	int i = 9;
-	printf("%f\n", i);
-}
+
+//int main()
+//{
+//	int a = 1;
+//	a = a >> 1;
+//	printf("%d", a);
+//
+//}
+
+//int main()
+//{
+//	int arr[] = { 3,4,5 };
+//	int* a = &arr[0];
+//	*a++ = 10;
+//	printf("%d", arr[0]);
+//}
