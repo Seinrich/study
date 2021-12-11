@@ -1,0 +1,4 @@
+﻿  求一个数的所有因数.cpp
+C:\Users\Seinrih\source\repos\Project11\Project11\求一个数的所有因数.cpp(40,9): warning C4477: “printf”: 格式字符串“%d”需要类型“int”的参数，但可变参数 1 拥有了类型“size_t”
+C:\Users\Seinrih\source\repos\Project11\Project11\求一个数的所有因数.cpp(40,9): message : 请考虑在格式字符串中使用“%zd”
+  Project11.vcxproj -> C:\Users\Seinrih\source\repos\Project11\x64\Debug\Project11.exe
