@@ -49,6 +49,7 @@ void Check(contact* ps)
 void Creat_New(contact* ps)
 {
 	Check(ps);
+	ps->person += ps->count;//调整person指针位置到无数据处(必须在check之后)
 	int is_right = 1;
 	while (is_right)
 	{
@@ -71,33 +72,35 @@ void Creat_New(contact* ps)
 				is_right = 0;
 				printf("创建成功!");
 				Sleep(1000);
-				system("cls");
 				ps->person++;
 				ps->count++;
 			}
 		}
 	}
+	ps->person -= ps->count;//调整person指针到初始处
+	system("cls");
 }
 
 void Show(contact* ps)
 {
 	int i = ps->count;
+	printf("姓名              电话号码\n");
 	while (i)
 	{
-		printf("姓名              电话号码\n");
 		printf("%s(%s)%16s\n", ps->person->name, ps->person->sex, ps->person->tel);
 		i--;
 		ps->person++;
-		system("pause");
-		system("cls");
 	}
+	system("pause");
+	system("cls");
+	ps->person -= ps->count;//让ps指向的person指针回归到最初位置
 }
 
 void Search(contact* ps)
 {
 	printf("选择查找方式：1.姓名查找 2.姓氏查找:>");
 	int choose = 1;
-	int whether = 0;
+	int whether = 0;//用来判断是否能找到联系人
 	while (choose)
 	{
 		scanf("%d", &choose);
@@ -107,21 +110,24 @@ void Search(contact* ps)
 			char name[nameM] = "";
 			scanf("%s", &name);
 			int i = ps->count;
-			PeopleInform* ptr = ps->person;
 			while (i)
 			{
-				if (0 == (strcmp(name, ptr->name)))
+				if (0 == (strcmp(name, ps->person->name)))
 				{
-					printf("该联系人信息如下\n");
-					printf("姓名              电话号码\n");
-					printf("%s(%s)%16s\n", ps->person->name, ps->person->sex, ps->person->tel);
 					whether++;
+					if (whether == 1)//为了只打印一次
+					{
+						printf("联系人信息如下\n");
+						printf("姓名              电话号码\n");
+					}
+					printf("%s(%s)%16s\n", ps->person->name, ps->person->sex, ps->person->tel);
+					
 				}
-				ptr++;
+				ps->person++;
 				i--;
 			}
 			if (whether == 0)
-				printf("该联系人不存在");
+				printf("该联系人不存在\n");
 			system("pause");
 			system("cls");
 			break;
@@ -132,17 +138,21 @@ void Search(contact* ps)
 			char name[nameM] = "";
 			scanf("%s", &name);
 			int i = ps->count;
-			PeopleInform* ptr = ps->person;
 			while (i)
 			{
-				if (0 == strncmp(name, ptr->name, strlen(name)))
+				
+				if (0 == strncmp(name, ps->person->name, strlen(name)))
 				{
-					printf("姓名              电话号码\n");
+					whether++;
+					if (whether == 1)//只打印一次，免重复
+					{
+						printf("联系人信息如下\n");
+						printf("姓名              电话号码\n");
+					}
 					printf("%s(%s)%16s\n", ps->person->name, ps->person->sex, ps->person->tel);
 				}
-				ptr++;
+				ps->person++;
 				i--;
-				whether++;
 			}
 			if (whether == 0)
 				printf("该联系人不存在\n");
@@ -156,12 +166,103 @@ void Search(contact* ps)
 			choose = 1;
 		}
 	}
+	ps->person -= ps->count;//让ps指向的person指针回归到最初位置
 }
 
 void Modify_List(contact* ps)
 {
-	printf("请输入要查找的联系人的姓名");
-	char name[20] = {};
-	scanf("%s", &name);
+	printf("请输入要修改的联系人姓或姓名\n");
+	//在联系人列表中开始查找，但方法不同与search,所以没有直接调用
+	char name[nameM] = "";
+	char tel[telM] = "";
+	char sex[sexM] = "";
+	scanf("%s %s %s", &name,&tel,&sex);
+
+	int i = ps->count;//避免修改count值
+
+	int whether = 0;//用以判断能否找到及控制打印
+
+	//记录下来符合条件的所有联系人地址，放进数组里
+	PeopleInform** p = (PeopleInform**)malloc(sizeof(PeopleInform));
+	if (p != NULL)
+	{
+		//打印全部符合条件的联系人（删除重复创建？。。。感觉可以在创建时禁止，但是快写完了，不改了）
+		while (i)
+		{
+			//if条件，判断姓名性别电话是否相符
+			if (0 == strncmp(name, ps->person->name,strlen(name)))
+			{
+				whether++;
+				if (whether == 1)
+				{
+					printf("找到如下联系人");
+					printf("  姓名              电话号码\n");
+				}
+				printf("%d %s(%s)%16s\n", whether,ps->person->name, ps->person->sex, ps->person->tel);
+				PeopleInform** ptr = (PeopleInform**)realloc(p, whether * sizeof(PeopleInform));
+				if (ptr != NULL)
+				{
+					p = ptr;
+					p[whether - 1] = ps->person;//记录找到的联系人所存信息的地址（我太难了）
+				}
+			}
+			ps->person++;//ps指针指到最后位置
+			i--;
+		}
+	}
+	if (whether >= 1)
+	{
+		int a = 0;
+		printf("请选择要修改的联系人（输入前面的数字）:>");
+		scanf("%d", &a);
+		printf("锁定联系人:>\n");
+		printf("%s(%s)%16s\n", p[a-1]->name, p[a-1]->sex, p[a-1]->tel);
+		int mod = 4;
+		printf("请输入要修改的内容\n");
+		printf("1.姓名 2.电话 3.性别 4.删除(还没实现) 0.退出");
+		while (mod)
+		{
+			printf("请选择:>");
+			scanf("%d", &mod);
+			if (mod == 1)
+			{
+				char name[nameM] = "";
+				scanf("%s", p[a-1]->name);
+				printf("修改成功");
+			}
+			else if (mod == 2)
+			{
+				char tel[telM] = "";
+				scanf("%s", p[a - 1]->tel);
+				printf("修改成功");
+			}
+			else if (mod == 3)
+			{
+				char sex[sexM] = "";
+				scanf("%s", p[a - 1]->sex);
+				printf("修改成功");
+			}
+			else if (mod == 4)
+			{
+				printf("等日后实现奥");
+				system("pause");
+			}
+		}
+	}
+	if (whether == 0)
+	{
+		printf("联系人不存在");
+	}
+	ps->person -= ps->count;//指针回归初始位置
 }
 
+int Cmp(const void* p1,const void* p2)
+{
+	return strcmp(((PeopleInform*)p1)->name, ((PeopleInform*)p2)->name);
+}
+
+void Sort_List(contact* ps)
+{
+	qsort(ps->person, ps->count, sizeof(PeopleInform), Cmp);
+	printf("排序成功");
+}
