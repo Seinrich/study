@@ -62,6 +62,77 @@ void SlistPopBack(SlistNode** pphead)
 	}
 }
 
+void SlistPushFront(SlistNode** pphead, SlistDataTpye x)
+{
+	SlistNode* NewNode = CreatSlistNode(x);
+	NewNode->next = *pphead;
+	*pphead = NewNode;
+}
+
+void SlistPopFront(SlistNode** pphead)
+{
+	if (*pphead == NULL)
+	{
+		return;
+	}
+	else
+	{
+		SlistNode* next = (*pphead)->next;
+		free(*pphead);
+		*pphead = next;
+	}
+}
+
+SlistNode* SlistFind(SlistNode* phead, SlistDataTpye x)
+{
+	SlistNode* cur = phead;
+	int count = 0;
+	if (cur == NULL)
+	{
+		return NULL;
+	}
+	else
+	{
+		while (cur != NULL)
+		{
+			if (cur->a == x)
+			{
+				return cur;
+			}
+			cur = cur->next;
+		}
+		return NULL;
+	}
+}
+
+void SlistInserAfter(SlistNode* pos, SlistDataTpye x)
+{
+	if (pos == NULL)
+	{
+		return;
+	}
+
+	SlistNode* NewNode = CreatSlistNode(x);
+	NewNode->next = pos->next;
+	pos->next = NewNode;
+}
+
+void SlistEraseAfter(SlistNode* pos)
+{
+	if (pos == NULL)
+	{
+		return;
+	}
+	else if (pos->next != NULL)
+	{
+		SlistNode* next = pos->next;
+		SlistNode* nextnext = next->next;
+		pos->next = nextnext;
+		free(next);
+		next = NULL;
+	}
+}
+
 void PrintSlist(SlistNode* phead)
 {
 	if (phead == NULL)
@@ -77,4 +148,5 @@ void PrintSlist(SlistNode* phead)
 			tail = tail->next;
 		}
 	}
+	printf("NULL");
 }
