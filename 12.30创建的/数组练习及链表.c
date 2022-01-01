@@ -46,65 +46,105 @@
 /**
  * Note: The returned array must be malloced, assume caller calls free().
  */
-int* addToArrayForm(int* num, int numSize, int k, int* returnSize)
+//int* addToArrayForm(int* num, int numSize, int k, int* returnSize)
+//{
+//    int kcopy = k;
+//    int kSize = 0;
+//    int ret = 0;
+//    while (kcopy)
+//    {
+//        kSize++;
+//        kcopy /= 10;
+//    }
+//    int len = kSize > numSize ? kSize : numSize;// k与num谁的位数更多
+//    int i = numSize - 1;
+//    int carry = 0;//是否进位
+//    int* returnArr = (int*)malloc(sizeof(int) * (len + 1));//即使进位，也最多是比最长数位多一位
+//    int m = len;//m是len的副本，用来对returnArr数组放置元素时定位下标，从最后的位置开始放
+//    int lencopy = len;//lencopy是len的副本，用来返回returnSize的指向值
+//    while (len)
+//    {
+//        //针对数组元素个数小于k的位数
+//        int a = 0;
+//        if (i >= 0)
+//        {
+//            a = num[i];
+//            i--;
+//        }
+//        ret = a + k % 10 + carry;
+//        k /= 10;
+//        if (ret > 9)
+//        {
+//            ret -= 10;
+//            carry = 1;
+//        }
+//        else
+//        {
+//            carry = 0;
+//        }
+//        returnArr[m] = ret;
+//        len--;
+//        m--;
+//    }
+//    if (carry == 1)
+//    {
+//        returnArr[m] = 1;
+//        *returnSize = lencopy + 1;
+//        return returnArr;
+//    }
+//    else
+//    {
+//        //由于额外多开辟了一个整形空间，最高位相加不进位时，需要返回returnArr+1，跳过第一个元素
+//        *returnSize = lencopy;
+//        return returnArr + 1;
+//    }
+//}
+
+//35. 搜索插入位置
+//给定一个排序数组和一个目标值，在数组中找到目标值，并返回其索引。如果目标值不存在于数组中，返回它将会被按顺序插入的位置。
+
+//请必须使用时间复杂度为 O(log n) 的算法。
+
+//来源：力扣（LeetCode）
+//链接：https ://leetcode-cn.com/problems/search-insert-position
+//著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+
+//int searchInsert(int* nums, int numsSize, int target)
 {
-    int kcopy = k;
-    int kSize = 0;
-    int ret = 0;
-    while (kcopy)
+    int left = 0;
+    int right = numsSize - 1;
+    int mid = (left + right) / 2;
+    while (left <= right)
     {
-        kSize++;
-        kcopy /= 10;
-    }
-    int len = kSize > numSize ? kSize : numSize;// k与num谁的位数更多
-    int i = numSize - 1;
-    int carry = 0;//是否进位
-    int* returnArr = (int*)malloc(sizeof(int) * (len + 1));//即使进位，也最多是比最长数位多一位
-    int m = len;//m是len的副本，用来对returnArr数组放置元素时定位下标，从最后的位置开始放
-    int lencopy = len;//lencopy是len的副本，用来返回returnSize的指向值
-    while (len)
-    {
-        //针对数组元素个数小于k的位数
-        int a = 0;
-        if (i >= 0)
+        mid = (left + right) / 2;
+        if (nums[mid] < target)
         {
-            a = num[i];
-            i--;
+            left = mid + 1;
         }
-        ret = a + k % 10 + carry;
-        k /= 10;
-        if (ret > 9)
+        else if (nums[mid] > target)
         {
-            ret -= 10;
-            carry = 1;
+            right = mid - 1;
         }
         else
         {
-            carry = 0;
+            break;
         }
-        returnArr[m] = ret;
-        len--;
-        m--;
     }
-    if (carry == 1)
+    if (nums[mid] >= target)
     {
-        returnArr[m] = 1;
-        *returnSize = lencopy + 1;
-        return returnArr;
+        return mid;
     }
     else
     {
-        //由于额外多开辟了一个整形空间，最高位相加不进位时，需要返回returnArr+1，跳过第一个元素
-        *returnSize = lencopy;
-        return returnArr + 1;
+        return mid + 1;
     }
 }
 
-int main()
-{
-    int arr[] = { 3,8,0,3,0,2,7,0,7,6,4,9,9,1,7,6,6,1,6 };
-    int k = 670;
-    int resize = 0;
-    int* p = &resize;
-    addToArrayForm(arr, sizeof(arr) / sizeof(arr[0]), k, p);
-}
+//int main()
+//{
+//    int arr[] = { 3,8,0,3,0,2,7,0,7,6,4,9,9,1,7,6,6,1,6 };
+//    int k = 670;
+//    int resize = 0;
+//    int* p = &resize;
+//    addToArrayForm(arr, sizeof(arr) / sizeof(arr[0]), k, p);
+//}
