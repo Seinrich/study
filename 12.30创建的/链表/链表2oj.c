@@ -86,3 +86,47 @@ struct ListNode* removeElements(struct ListNode* head, int val)
 //    }
 //    return slow;
 //}
+
+//24. 两两交换链表中的节点
+//给你一个链表，两两交换其中相邻的节点，并返回交换后链表的头节点。
+//你必须在不修改节点内部的值的情况下完成本题（即，只能进行节点交换）。
+
+//struct ListNode* swapPairs(struct ListNode* head)
+//{
+//    if (head == NULL || head->next == NULL)
+//    {
+//        return head;
+//    }
+//    struct ListNode* returnhead = head->next;
+//    struct ListNode* pfront = head;
+//    struct ListNode* pafter = head->next;
+//    struct ListNode* copy = pafter;
+//    int whether = 0;
+//    while (pafter)
+//    {
+//        if (whether == 0)
+//        {
+//            pfront->next = pafter->next;
+//            pafter->next = pfront;
+//            whether++;
+//        }
+//        else
+//        {
+//            pfront->next = pafter->next;
+//            pafter->next = pfront;
+//            copy->next = pafter;
+//        }
+//        struct ListNode* tmp = NULL;
+//        tmp = pafter;
+//        pafter = pfront;
+//        pfront = tmp;
+//        copy = pafter;
+//        if (pafter->next == NULL)
+//        {
+//            break;
+//        }
+//        pfront = pfront->next->next;
+//        pafter = pafter->next->next;
+//    }
+//    return returnhead;
+//}
