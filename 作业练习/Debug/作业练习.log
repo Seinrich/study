@@ -1,5 +1,3 @@
 ﻿  test 1.11.cpp
-C:\Users\Seinrih\source\repos\作业练习\作业练习\test 1.11.cpp(25,8): warning C4476: "scanf": 格式说明符中的类型字段字符“ ”未知
-C:\Users\Seinrih\source\repos\作业练习\作业练习\test 1.11.cpp(25,22): warning C4474: scanf: 格式字符串中传递的参数太多
-C:\Users\Seinrih\source\repos\作业练习\作业练习\test 1.11.cpp(25,22): message : 占位符和其参数预计 1 可变参数，但提供的却是 2 参数
+C:\Users\Seinrih\source\repos\作业练习\作业练习\test 1.11.cpp(99,8): warning C4804: “>”: 在操作中使用类型“bool”不安全
   作业练习.vcxproj -> C:\Users\Seinrih\source\repos\作业练习\Debug\作业练习.exe
