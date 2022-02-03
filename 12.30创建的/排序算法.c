@@ -138,7 +138,6 @@ void quicksort(int* arr, int left, int right)
 
 }
 
-
 void test03()
 {
 	int arr[] = { 2,1,34534,324,134,6344,235454,1,12,3,4 };
@@ -151,10 +150,92 @@ void test03()
 	}
 }
 
+//¶ÑÅÅÐò
+
+void heapinsert(int*p, int index)
+{
+	while (p[index] > p[(index - 1) / 2])
+	{
+		swap(p, index, (index - 1) / 2);
+		index = (index - 1) / 2;
+	}
+}
+
+void heapify(int* p, int index, int heapsize)
+{
+	int left = 2 * index + 1;
+	while (left<heapsize)
+	{
+		int largest = (left + 1 < heapsize && p[left] < p[left + 1]) ? left+1 : left;
+		largest = p[index] > p[largest] ? index : largest;
+		if (largest == index)
+		{
+			break;
+		}
+		swap(p, index, largest);
+		index = largest;
+		left = index * 2 + 1;
+	}
+}
+
+void heapsort(int* p, int sz)
+{
+	if (p == NULL || sz < 2)
+	{
+		return;
+	}
+	int i;
+	for (i = 0; i < sz; i++)
+	{
+		heapinsert(p, i);
+	}
+
+	int heapsize = sz;
+	swap(p, --heapsize, 0);
+
+	while(heapsize>0)
+	{
+		heapify(p, 0, heapsize);
+		swap(p, 0, --heapsize);
+	}
+}
+
+void test04()
+{
+	int arr[] = { 2,1,34534,324,134,6344,235454,1,12,3,4 };
+	int sz = sizeof(arr) / sizeof(arr[0]);
+	heapsort(arr,sz);
+	int i = 0;
+	for (; i < sz; i++)
+	{
+		printf("%d ", arr[i]);
+	}
+}
+
+//¼ÆÊýÅÅÐòÂÔ£¬»ùÊýÅÅÐò£¨Í°ÅÅÐò£©
+
+void sort()
+{
+
+}
+
+void test05()
+{
+	int arr[] = { 2,1,34534,324,134,6344,235454,1,12,3,4 };
+	int sz = sizeof(arr) / sizeof(arr[0]);
+	sort(arr, sz);
+	int i = 0;
+	for (; i < sz; i++)
+	{
+		printf("%d ", arr[i]);
+	}
+}
+
 int main()
 {
-	srand((unsigned int)time(NULL));
+	//srand((unsigned int)time(NULL));
 	//test01();
 	//test02();
-	test03();
+	//test03();
+	test04();
 }
