@@ -300,7 +300,238 @@ struct ListNode* addTwoNumbers(struct ListNode* l1, struct ListNode* l2)
     return head;
 }
 
+int lengthOfLongestSubstring(char* s)
+{
+    if ((*s) == '\0')
+    {
+        return 0;
+    }
+    int arr[128], i;
+    int len = strlen(s);
+    int max = 1;
+    int count = 0;
+    for (i = 0; i < 128; i++)
+    {
+        arr[i] = 0;
+    }
+    for (i = 0; i < len; i++)
+    {
+        arr[s[i]] += 1;
+        if (arr[s[i]] != 2)
+        {
+            count++;
+        }
+        else
+        {
+            if (count >= max)
+            {
+                max = count;
+            }
+            for (int j = 0; j < 128; j++)
+            {
+                arr[j] = 0;
+            }
+            count = 0;
+            i -= 1;
+        }
+    }
+    max = count >= max ? count : max;
+    return max;
+}
+
+int getnolen(char* s)
+{
+    int len = strlen(s);
+    int left = 0, right = 0, i = 0;
+    int arr[128];
+    int count = 0, max = 0;
+    for (i = 0; i < 128; i++)
+    {
+        arr[i] = 0;
+    }
+    for (; right < len;)
+    {
+        arr[s[right]] += 1;
+        if (arr[s[right]] != 2)
+        {
+            count++;
+            right++;
+        }
+        else
+        {
+            max = count > max ? count : max;
+            for (; arr[s[right]] > 1;)
+            {
+                arr[s[left++]] -= 1;
+            }
+            count = right - left + 1;
+            right++;
+        }
+    }
+    return max > count ? max : count;
+}
+
+int dominantIndex(int* nums, int numsSize)
+{
+    int i, flag, n;
+    int max = -2147483647;
+    for (i = 0; i < numsSize; i++)
+    {
+        max = nums[i] > max ? nums[i] : max;
+    }
+
+    for (int i = 0; i < numsSize; i++)
+    {
+        if (max == nums[i])
+        {
+            n = i;
+        }
+    }
+
+    for (i = 0; i < numsSize; i++)
+    {
+        if (i == n)
+        {
+            continue;
+        }
+        flag = max >= (2 * nums[i]) ? 1 : 0;
+        if (flag == 0)
+        {
+            return -1;
+        }
+    }
+
+    return n;
+}
+
+void print(char* s)
+{ 
+    if (*s) 
+    {   
+        print(++s);
+        printf("%c", *s);
+    } 
+}
+
+
+
+int* masterMind(char* solution, char* guess, int* returnSize)
+{
+    int* p = (int*)malloc(sizeof(int) * 2);
+    *returnSize = 2;
+    int n = 0, i = 0, count1 = 0, count2 = 0, count = 0, again;
+    char arrhelp[4];
+    for (i = 0; i < 4; i++)
+    {
+        n = 0;
+        n = n ^ solution[i] ^ guess[i];
+        if (n == 0)
+        {
+            count1++;
+        }
+    }
+    p[0] = count1;
+    for (i = 0; i < 4; i++)
+    {
+        for (int j = 0; j < count; j++)
+        {
+            if (guess[i] == solution[i])
+            {
+                goto next;
+            }
+        }
+        for (int j = 0; j < 4; j++)
+        {
+            //solution中是否已经匹配过下标为j的元素
+            for (int n = 0; n < count; n++)
+            {
+                if (j == arrhelp[n])
+                {
+                    j++;
+                }
+            }
+            if (j >= 4)break;
+            if (solution[j] == guess[i])
+            {
+                arrhelp[count++] = j;
+                if (solution[j] == guess[j])
+                {
+                    goto next;
+                }
+                count2++;
+                goto next;
+            }
+        }
+    next:
+        ;
+    }
+    p[1] = count2;
+    return p;
+}
+
+int findPeakElement(int* nums, int numsLen)
+{
+    int left = 0;
+    int right = numsLen - 1;
+    if (numsLen == 1)
+    {
+        return left;
+    }
+    if (numsLen > 1 && nums[left] > nums[left + 1])
+    {
+        return left;
+    }
+    else if (numsLen > 1 && nums[right] > nums[right - 1])
+    {
+        return right;
+    }
+    //向左去二分找
+    while (left < right)
+    {
+        int mid = left + ((right - left) >> 1);
+        if (mid >= 1 && nums[mid] > nums[mid + 1] && nums[mid] > nums[mid - 1])
+        {
+            return mid;
+        }
+        right = mid - 1;
+    }
+    left = 0, right = numsLen - 1;
+    while (left < right)
+    {
+        int mid = left + ((right - left) >> 1);
+        if (mid >= 1 && nums[mid] > nums[mid + 1] && nums[mid] > nums[mid - 1])
+        {
+            return mid;
+        }
+        left = mid + 1;
+    }
+    return 0;
+}
+
 int main()
 {
-
+    char so[] = "GGYY";
+    char gu[] = "GYYG";
+    int a = 2, * p = &a;
+    masterMind(so, gu, p);
 }
+
+//int main()
+//{
+//    int n;
+//    while (scanf("%d", &n) != EOF)
+//    {
+//        int sum = 0;
+//        for (int i = 1; i < n; i++)
+//        {
+//            if (n % i == 0)
+//            {
+//                sum += i;
+//            }
+//        }
+//        if (sum == n)
+//        {
+//            printf("%d\n", n);
+//        }
+//    }
+//}
