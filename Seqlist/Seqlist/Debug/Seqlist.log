@@ -1,0 +1,5 @@
+﻿  Seqlist.c
+C:\Users\Seinrih\source\repos\Seqlist\Seqlist\Seqlist.c(20,15): warning C4018: “>=”: 有符号/无符号不匹配
+  test.c
+  正在生成代码...
+  Seqlist.vcxproj -> C:\Users\Seinrih\source\repos\Seqlist\Debug\Seqlist.exe
